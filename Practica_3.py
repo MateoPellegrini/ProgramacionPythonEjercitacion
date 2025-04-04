@@ -234,7 +234,25 @@ def descuento_ropa(item, sede):
 print (f"Descuento: {descuento_ropa('Zapatillas', 'Funes')}%") # Descuento: 40%
 print (f"Descuento: {descuento_ropa('Remeras', 'Rosario')}%") # Descuento: 20%
 
+def descuento_ropa_listas(item, sede):
+    """
+    Devuelve el descuento de ropa en base al item y la sede.
+    :param item: Item de ropa (Zapatillas, Remeras o Pantalones).
+    :param sede: Sede del local (Rosario, Funes o Roldan).
+    :return: Descuento correspondiente o mensaje de error.
+    """
+    # Definir listas para los items, sedes y desucuentos
+    descuentos_lista_items = ["Zapatillas","Remeras","Pantalones"]
+    descuentos_lista_cedes = ["Rosario","Funes","Roldan"]
+    descuentos_lista_porcentaje = [[30, 40, 25],[20, 30, 15],[10, 5, 20]] # Contiene listas agrupadas por item, que a su vez contiene listas agrupadas por sede
 
+    posicion_item = descuentos_lista_items.index(item) # Buscar la posicion del item
+    posicion_cede = descuentos_lista_cedes.index(sede) # Buscar la posicion de la sede
+    porcentaje = descuentos_lista_porcentaje[posicion_item][posicion_cede] # Obtener el porcentaje correspondiente al item y la sede
+
+    return porcentaje
+
+print (f"LISTAS -> Descuento : {descuento_ropa_listas("Zapatillas", "Funes")}%") # Descuento: 40%
 """
 9. Ahora, supongamos que ademas dependiendo del dia de la semana se puede recibir un descuento
 adicional acumulable. Es decir, si se recibio un descuento del 10 % segun el item y la sede y la compra
@@ -278,3 +296,31 @@ def descuento_adicional(dia, item, sede):
 descuento_adicional('Lunes', 'Zapatillas', 'Funes') # Descuento total: 50%
 descuento_adicional('Martes', 'Zapatillas', 'Funes') # Descuento total: 40% - No hay descuento adicional
 descuento_adicional('Miercoles', 'Remeras', 'Rosario') # Descuento total: 28%
+
+def descuento_adicional_listas(dia, item, sede):
+    """
+    Devuelve el descuento total en base al dia, item y sede.
+    :param dia: Dia de la semana (Lunes, Martes, Miercoles, Jueves, Viernes, Sabado o Domingo).
+    :param item: Item de ropa (Zapatillas, Remeras o Pantalones).
+    :param sede: Sede del local (Rosario, Funes o Roldan).
+    :return: Descuento total correspondiente o mensaje de error.
+    """
+
+    descuento_adicional_dias = ["Lunes","Miercoles","Jueves"]
+    descuendo_adicional_porcentaje = [10,8,5]
+    
+    if dia not in descuento_adicional_dias:
+        extra = 0
+    else:        
+        dia_ingresado_index = descuento_adicional_dias.index(dia) # Buscar la posicion del dia ingresado
+        
+        extra = descuendo_adicional_porcentaje[dia_ingresado_index]
+
+    descuento_item = descuento_ropa(item, sede)
+    
+    descuento_total = descuento_item + extra  # Sumar el descuento del item y el descuento adicional
+    
+    return print (f"LISTAS -> Descuento total: {descuento_total}%")
+
+descuento_adicional_listas('Martes', 'Zapatillas', 'Funes') # Descuento total: 40% - No hay descuento adicional
+descuento_adicional_listas('Miercoles', 'Remeras', 'Rosario') # Descuento total: 28%
